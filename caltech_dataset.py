@@ -30,17 +30,16 @@ class Caltech(VisionDataset):
         self.labels = []
         class_cnt = 0
 
-        with open(os.path(s_path), 'r') as f:
-            for im_path in f:
-                im_path = im_path.strip()
-                label_name = im_path.split("/")[0]
-                if label_name != 'BACKGROUND_Google':
-                    image = pil_loader(os.path.join(root, im_path))
-                    self.images.append(image)
-                    if label_name not in self.label_names:
-                        self.label_names[label_name] = class_cnt
-                        class_cnt += 1
-                    self.labels.append(self.label_names[label_name])
+        for im_path in open(split_path, 'r'):
+            im_path = im_path.strip()
+            label_name = im_path.split("/")[0]
+            if label_name != 'BACKGROUND_Google':
+                image = pil_loader(os.path.join(root, im_path))
+                self.images.append(image)
+                if label_name not in self.label_names:
+                    self.label_names[label_name] = class_cnt
+                    class_cnt += 1
+                self.labels.append(self.label_names[label_name])
 
 
 

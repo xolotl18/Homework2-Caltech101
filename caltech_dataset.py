@@ -74,7 +74,7 @@ class Caltech(VisionDataset):
     def train_val_split(self, val_size=None, random_state=None):
         train_indices, val_indices = train_test_split(np.arange(len(self.labels)),
                                                       test_size=val_size,
-                                                      shuffle=True,
+                                                      shuffle=False,
                                                       stratify=self.labels)
 
         return train_indices, val_indices

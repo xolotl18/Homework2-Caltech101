@@ -4,6 +4,8 @@ from PIL import Image
 
 import os
 import os.path
+from sklearn.model_selction import train_test_split
+import numpy as np
 import sys
 
 
@@ -21,6 +23,26 @@ class Caltech(VisionDataset):
         self.split = split # This defines the split you are going to use
                            # (split files are called 'train.txt' and 'test.txt')
 
+        path = 'Caltech101/'+split+'.txt'
+
+        self.label_names = {}
+        self.images = []
+        self.labels = []
+        class_cnt = 0
+
+        with open(os.path(path), 'r') as f:
+            for im_path in f:
+                im_path = im_path.strip()
+                label_name = im_path.split("/")[0]
+                if label_name != 'BACKGROUND_Google':
+                    image = pil_loader(os.path.join(root, im_path))
+                    self.images.append(image)
+                    if label_name not in self.label_names:
+                        self.label_names[label_name] = class_cnt
+                        class_cnt += 1
+                    self.labels.append(self.label_names[label_name])
+
+
         '''
         - Here you should implement the logic for reading the splits files and accessing elements
         - If the RAM size allows it, it is faster to store all data in memory
@@ -35,12 +57,11 @@ class Caltech(VisionDataset):
         __getitem__ should access an element through its index
         Args:
             index (int): Index
-
         Returns:
             tuple: (sample, target) where target is class_index of the target class.
         '''
 
-        image, label = ... # Provide a way to access image and label via index
+        image, label = self.images[index], self.labels[index] # Provide a way to access image and label via index
                            # Image should be a PIL Image
                            # label can be int
 
@@ -50,10 +71,20 @@ class Caltech(VisionDataset):
 
         return image, label
 
+
     def __len__(self):
         '''
         The __len__ method returns the length of the dataset
         It is mandatory, as this is used by several other components
         '''
-        length = ... # Provide a way to get the length (number of elements) of the dataset
+        length = len(self.labels) # Provide a way to get the length (number of elements) of the dataset
         return length
+
+    def train_val_split(self, val_size=None, random_state=None):
+        train_indices, val_indices = train_test_split(np.arange(len(self.labels)),
+                                                      test_size=test_size,
+                                                      shuffle=True,
+                                                      stratify=self.labels)
+
+        return train_indices, val_indices
+

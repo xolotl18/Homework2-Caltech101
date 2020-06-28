@@ -23,14 +23,14 @@ class Caltech(VisionDataset):
         self.split = split # This defines the split you are going to use
                            # (split files are called 'train.txt' and 'test.txt')
 
-        path = 'Caltech101/'+split+'.txt'
+        s_path = 'Caltech101/'+split+'.txt'
 
         self.label_names = {}
         self.images = []
         self.labels = []
         class_cnt = 0
 
-        with open(os.path(path), 'r') as f:
+        with open(os.path(s_path), 'r') as f:
             for im_path in f:
                 im_path = im_path.strip()
                 label_name = im_path.split("/")[0]

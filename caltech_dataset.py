@@ -30,7 +30,7 @@ class Caltech(VisionDataset):
         self.labels = []
         class_cnt = 0
 
-        for im_path in open(split_path, 'r'):
+        for im_path in open(s_path, 'r'):
             im_path = im_path.strip()
             label_name = im_path.split("/")[0]
             if label_name != 'BACKGROUND_Google':

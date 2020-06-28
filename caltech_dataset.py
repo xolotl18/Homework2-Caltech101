@@ -71,11 +71,11 @@ class Caltech(VisionDataset):
         length = len(self.labels) # Provide a way to get the length (number of elements) of the dataset
         return length
 
-    def train_val_split(self, val_size=None, random_state=None):
-        train_indices, val_indices = train_test_split(np.arange(len(self.labels)),
+    def train_validation_split(self, val_size=None, random_state=None):        
+        train_indices, val_indices = train_test_split(np.arange(len(self.labels)), 
                                                       test_size=val_size,
-                                                      shuffle=True,
-                                                      stratify=self.labels)
-
+                                                      stratify=self.labels,
+                                                      random_state=random_state)
+        
         return train_indices, val_indices
 

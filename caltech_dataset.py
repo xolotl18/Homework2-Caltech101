@@ -4,7 +4,7 @@ from PIL import Image
 
 import os
 import os.path
-from sklearn.model_selction import train_test_split
+from sklearn.model_selection import train_test_split
 import numpy as np
 import sys
 
@@ -43,14 +43,6 @@ class Caltech(VisionDataset):
                     self.labels.append(self.label_names[label_name])
 
 
-        '''
-        - Here you should implement the logic for reading the splits files and accessing elements
-        - If the RAM size allows it, it is faster to store all data in memory
-        - PyTorch Dataset classes use indexes to read elements
-        - You should provide a way for the __getitem__ method to access the image-label pair
-          through the index
-        - Labels should start from 0, so for Caltech you will have lables 0...100 (excluding the background class) 
-        '''
 
     def __getitem__(self, index):
         '''
